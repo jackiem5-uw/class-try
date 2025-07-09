@@ -8,14 +8,14 @@
 .banner-title {
   position: absolute;
   top: 50%;
-  left: 0;
-  width: 100;
+  left: 50%;
+  width: 100%;
   color: white;
   font-size: 2em;
   font-weight: bold;
   text-align: center;
-  transform: translateY(-50%);
-    text shadow: 2px 2px 8px #333;
+  transform: translateY(-50%, -50%);
+    text-shadow: 2px 2px 8px #333;
   pointer-events: none;
 }
     .banner {
@@ -34,7 +34,7 @@ width: 100%;
   display: block;
 }
     nav {
-      background: iris;
+      background: #5a4fcf;
       color: yellow;
       display: flex;
       justify-content: center;
@@ -46,7 +46,7 @@ width: 100%;
       display: block;
     }
     nav a:hover {
-      background: iris;
+      background: #5a4fcf;
       color: red;
     }
 .banner, .nav {
@@ -64,6 +64,7 @@ width: 100%;
       max-width: 800px;
       margin: 2em auto;
       padding: 0 1em;
+      padding-top: 300px;
     }
     .dos-donts-table {
       width: 100%;
