@@ -4,7 +4,93 @@
     <meta charset="UTF-8">
     <title>AI Assisted Coding for Secondary Students</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+    .banner {
+      width: 100%;
+      height: 200px;
+      text-align: center;
+    }
+.banner img {
+width: 100%;
+  height: auto;
+  display: block;
+}
+    nav {
+      background: iris;
+      color: yellow;
+      display: flex;
+      justify-content: center;
+    }
+   nav a {
+      color: yellow;
+      text-decoration: none;
+      padding: 1em 2em;
+      display: block;
+    }
+    nav a:hover {
+      background: iris;
+      color: red;
+    }
+.banner, .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200px
+  z-index: 1000;
+}
+.nav {
+  top: 200px
+}
+    .container {
+      max-width: 800px;
+      margin: 2em auto;
+      padding: 0 1em;
+    }
+    .dos-donts-table {
+      width: 100%;
+      max-width: 600px;
+      margin: 2rem auto;
+      border-collapse: collapse;
+      font-family: Arial, sans-serif;
+    }
+    .dos-donts-table th,
+    .dos-donts-table td {
+      border: 1px solid #ccc;
+      padding: 1rem;
+      text-align: left;
+    }
+    .dos-donts-table th {
+      background-color: #f5f5f5;
+      font-weight: bold;
+    }
+    .dos-donts-table tr {
+      height: 2.5em;
+    }
+    @media (max-width: 600px) {
+      .dos-donts-table th,
+      .dos-donts-table td {
+        padding: 0.5rem;
+        font-size: 0.95em;
+      }    
+/* unvisited link */
+a:link {
+  color: red;
+}
+/* visited link */
+a:visited {
+  color: iris;
+}
+/* mouse over link */
+a:hover {
+  color: yellow;
+}
+/* selected link */
+a:active {
+  color: blue;
+}
+  </style>
   </head>
   <body>
     <div class="banner">
