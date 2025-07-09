@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
     body { font-family: Arial, sans-serif; margin: 0; padding: 0; }
+.banner-title {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100;
+  color: white;
+  font-size: 2em;
+  font-weight: bold;
+  text-align: center;
+  transform: translateY(-50%);
+    text shadow: 2px 2px 8px #333;
+  pointer-events: none;
+}
     .banner {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 200px;
-      text-align: center;
+      z-index: 1000;
+      overflow: hidden;
     }
 .banner img {
 width: 100%;
   height: 200px;
   object-fit: cover;
+  display: block;
 }
     nav {
       background: iris;
@@ -94,9 +112,9 @@ a:active {
   <body>
     <div class="banner">
       <img src="banner.png" alt="Banner Image">
-      <title>AI Assisted Coding for Secondary Students</title>
+      <div class="banner-title">AI Assisted Coding for Secondary Students</div>
     </div>
-    <nav>
+    <nav class="nav">
       <a href="#index">Introduction</a>
       <a href="instructions.html">Instructions</a>
       <a href="art.html">Art Example</a>
