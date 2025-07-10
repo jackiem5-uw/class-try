@@ -11,7 +11,7 @@
  top: 0;
   left: 0;
   color: white;
-  font-size: 20%;
+  font-size: auto;
   font-weight: bold;
   z-index: 1000;
   text-align: center;
@@ -28,18 +28,22 @@
     }
 .banner img {
 width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
   display: block;
 }
-    nav {
+    .nav {
       background: #5a4fcf;
+      width: 100%;
       color: yellow;
       display: flex;
       flex-direction: row;
       align-items: center;
       height: 50px;
       justify-content: center;
+      position: fixed;
+    top: 250px;
+        z-index: 1000;
     }
    nav a {
       color: yellow;
@@ -51,18 +55,7 @@ width: 100%;
       background: #5a4fcf;
       color: red;
     }
-.banner, .nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 200px;
-  z-index: 1000;
-}
-.nav {
-  top: 200px
-  bottom: 275px;;
-}
+
     .container {
       max-width: 800px;
       margin: 2em auto;
