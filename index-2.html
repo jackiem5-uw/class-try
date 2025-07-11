@@ -94,7 +94,7 @@ text-align: center;
             z-index: 1;
         }
         
-        .toc-section {
+      <!--  .toc-section {
             background: #f8f9fa;
             border-bottom: 1px solid #dee2e6;
             padding: 1.5rem 0;
@@ -137,7 +137,7 @@ text-align: center;
         .top-toc a:hover {
             background: #667eea;
             color: white;
-        }
+        } -->
 
 
 
@@ -221,9 +221,27 @@ padding-right: 2.5rem;
 img {
 width: 100%;
 height: auto;
-padding-left: 2rem;
-padding-right: 2rem;
+
 }
+
+
+figure {
+    border: 1px solid #555;
+margin-left: 2rem;
+margin-right: 2rem;
+margin-below: 2rem;
+text-align: right;
+
+}
+
+figcaption {
+    text-align: right;
+margin-right: 2rem;
+    font-size: .8rem;
+    color: #333;
+    background-color: white;
+}
+
 
         .image-placeholder {
             background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -438,6 +456,7 @@ padding-right: 2rem;
             .toc-container {
                 padding: 0 1rem;
             }
+
         }
     </style>
 </head>
@@ -454,23 +473,7 @@ padding-right: 2rem;
             </div>
             <p class="subtitle">Students. Coders. Creators.</p>
         </header>
-        
-<!--
-        <div class="toc-section">
-            <div class="toc-container">
-                <nav class="top-toc">
-                    <ul>
-                        <li><a href="#C1">Introduction</a></li>
-                        <li><a href="#C2">Disclaimer</a></li>
-                        <li><a href="#C3">Instructions</a></li>
-                        <li><a href="#C4">Example Projects</a></li>
-                        <li><a href="#C5">Going Forward</a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-        
-    -->
+
 
 
             
@@ -493,13 +496,34 @@ padding-right: 2rem;
 </div>
 <p> July 11, 2025</p>
 
-<img src="intro-image.png">
+<!-- <img src="intro-image.png"> -->
+
+<figure>
+    <img src="intro-image.png" alt="AI generated image">
+    <figcaption>AI generated image</figcaption>
+</figure>
 
 
+
+<br>
                 <p>Over the years, AI has become more and more powerful in its ability to help developers with their code, allowing them to code more efficiently and effectively than ever before. It is a great tool that, if used correctly, can help aid in prototypes of projects and help put the finishing touches on an HTML website. With this article, you will learn how to use AI effectively to improve your HTML projects.</p>
                 
   
-                
+                  
+<div class="toc-section">
+            <div class="toc-container">
+                <nav class="top-toc">
+                    <ul>
+               
+                        <li><a href="#C2">Disclaimer</a></li>
+                        <li><a href="#C3">Instructions</a></li>
+                        <li><a href="#C4">Example Projects</a></li>
+                        <li><a href="#C5">Going Forward</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+          
 
                 
                 <h3 id="C2">Disclaimer</h3>
@@ -542,7 +566,7 @@ padding-right: 2rem;
                     </tbody>
                 </table>
                 
-                <h2 id="C3">Instructions</h2>
+               <h2 id="C3">Instructions</h2>
                 <p>Now that we've gone over the "Do's" and "Don't's" of AI coding assistance, we'll go through the step-by-step process of using AI coding assistance effectively in a project. Follow the steps below to use AI assistance responsibly and effectively. Because of how accessible it is, we recommend using GitHub Copilot as it is built into applications like Visual Studio Code and GitHub. If you are unsure how to access the AI coding assistant in your preferred application, be sure to ask a teacher or search on Google for help. Every app is unique and won't have everything in quite the same place.</p>
                 
                 <h3>Step 1: Start with an idea</h3>
