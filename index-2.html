@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assisted Coding for Secondary Students</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            min-height: 100vh;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="90" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-100px); }
+        }
+        
+        .header-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .logo {
+            margin-right: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .article-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .toc-section {
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            padding: 1.5rem 0;
+        }
+        
+        .toc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .toc-container h3 {
+            color: #495057;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .top-toc ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .top-toc a {
+            color: #495057;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+        
+        .top-toc a:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .main-content {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            align-items: flex-start;
+        }
+        
+         .sidebar {
+            position: sticky;
+            top: 2rem;
+            min-width: 280px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #dee2e6;
+        }
+        
+        .sidebar h2 {
+            color: #495057;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .sidebar ul {
+            list-style: none;
+        }
+        
+        .sidebar li {
+            margin: 0.75rem 0;
+        }
+        
+        .sidebar a {
+            color: #495057;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            display: block;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(5px);
+        }
+        
+        .sidebar a.active-article {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }  
+        
+        .content {
+            flex: 1;
+            min-width: 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .content h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+            position: relative;
+        }
+        
+        .content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #764ba2;
+        }
+        
+        .content h3 {
+            color: #495057;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+            padding-left: 1rem;
+            border-left: 4px solid #667eea;
+        }
+        
+        .content p {
+            margin-bottom: 1.2rem;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #495057;
+        }
+        
+        .image-placeholder {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            color: #6c757d;
+            font-style: italic;
+            margin: 1.5rem 0;
+            transition: all 0.3s ease;
+        }
+        
+        .image-placeholder:hover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+        }
+        
+        .dos-donts-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .dos-donts-table caption {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+        
+        .dos-donts-table th,
+        .dos-donts-table td {
+            width: 50%;
+            padding: 1rem;
+        }
+        
+        .dos-donts-table th:first-child {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .dos-donts-table th:last-child {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .dos-donts-table th {
+            background: #f8f9fa;
+            color: #495057;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .dos-donts-table td {
+            border-bottom: 1px solid #dee2e6;
+            vertical-align: top;
+        }
+        
+        .dos-donts-table tr:nth-child(even) td {
+            background: #f8f9fa;
+        }
+        
+        .dos-donts-table tr:hover td {
+            background: #e9ecef;
+        }
+        
+        .dos-donts-table td:first-child {
+            border-left: 4px solid #28a745;
+        }
+        
+        .dos-donts-table td:last-child {
+            border-left: 4px solid #dc3545;
+        }
+        
+        .resources-list {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .resources-list ul {
+            list-style: none;
+        }
+        
+        .resources-list li {
+            margin: 1rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .resources-list a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .resources-list a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+        
+        .example-projects {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+        
+        .example-projects ul {
+            list-style: none;
+        }
+        
+        .example-projects li {
+            background: white;
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #667eea;
+        }
+        
+        .example-projects li strong {
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        .example-projects li div {
+            color: #6c757d;
+            font-style: italic;
+            margin-top: 0.5rem;
+        }
+        
+        .warning-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .warning-box::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+        
+        .highlight {
+            background: linear-gradient(135deg, #667eea20 0%, #764ba220 100%);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            z-index: 1000;
+            transition: width 0.3s ease;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .content {
+                padding: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .article-title {
+                font-size: 1.5rem;
+            }
+            
+            .top-toc ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .toc-container {
+                padding: 0 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="scroll-progress"></div>
+    <div class="container">
+        <header>
+            <div class="header-brand">
+                <div class="logo">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="20" cy="20" r="18" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="2"/>
+                        <path d="M15 12L25 20L15 28V12Z" fill="white"/>
+                        <circle cx="28" cy="12" r="3" fill="rgba(255,255,255,0.3)"/>
+                        <circle cx="32" cy="28" r="2" fill="rgba(255,255,255,0.3)"/>
+                    </svg>
+                </div>
+                <h1>Gryffinclaw</h1>
+            </div>
+            <h2 class="article-title">AI Assisted Coding for Secondary Students</h2>
+            <p class="subtitle">Learn to use AI tools responsibly and effectively in your coding journey</p>
+        </header>
+        
+        <div class="toc-section">
+            <div class="toc-container">
+                <h3>Table of Contents</h3>
+                <nav class="top-toc">
+                    <ul>
+                        <li><a href="#C1">Introduction</a></li>
+                        <li><a href="#C2">Disclaimer</a></li>
+                        <li><a href="#C3">Instructions</a></li>
+                        <li><a href="#C4">Example Projects</a></li>
+                        <li><a href="#C5">Going Forward</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <nav class="sidebar">
+                <h2>More Articles</h2>
+                <ul>
+                    <li><a href="#" class="active-article">AI Assisted Coding for Secondary Students</a></li>
+                    <li><a href="#">Introduction to Web Development</a></li>
+                    <li><a href="#">JavaScript Fundamentals</a></li>
+                    <li><a href="#">Responsive Design Principles</a></li>
+                    <li><a href="#">Version Control with Git</a></li>
+                    <li><a href="#">CSS Grid and Flexbox</a></li>
+                    <li><a href="#">Best Practices for Clean Code</a></li>
+                    <li><a href="#">Debugging Techniques</a></li>
+                </ul>
+            </nav>
+            
+            <div class="content">
+                <h2 id="C1">Introduction</h2>
+                <p>Over the years, AI has become more and more powerful in its ability to help developers with their code, allowing them to code more efficiently and effectively than ever before. It is a great tool that, if used correctly, can help aid in prototypes of projects and help put the finishing touches on an HTML website. With this article, you will learn how to use AI effectively to improve your HTML projects.</p>
+                
+                <div class="image-placeholder">
+                    🤖 AI Assistant Illustration - Professional graphic showing AI helping with code
+                </div>
+                
+                <div class="warning-box">
+                    <strong>Important:</strong> This guide emphasizes responsible AI usage that enhances learning rather than replacing it.
+                </div>
+                
+                <h2 id="C2">Disclaimer</h2>
+                <p>When using AI as an assistant for coding, it is important to use it in the appropriate circumstances. We want to make it clear that <span class="highlight">we do not support using AI to do all of the coding by itself.</span> This is a bad practice as you will not learn from the coding process. AI does not think like humans and will arrange the code in a way that may not be optimal for any experienced developer. On top of that, having AI do all the work for you would be considered cheating. Work with your teacher and figure out the best way to use AI for your project. And trust us, any experienced teacher or developer <em>will</em> know if you used the AI to make all of your website. Here are some "Do's" and "Don't's" when using AI coding assistance:</p>
+                
+                <table class="dos-donts-table">
+                    <caption>The Do's and Don't's of AI Assisted Coding</caption>
+                    <thead>
+                        <tr>
+                            <th scope="col">✅ Do's</th>
+                            <th scope="col">❌ Don't's</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ask the AI for help when you are stuck on something</td>
+                            <td>Have the AI write all of the code for you</td>
+                        </tr>
+                        <tr>
+                            <td>Ask the AI how it fixed an issue with your code</td>
+                            <td>Have the AI write all of the text within your website</td>
+                        </tr>
+                        <tr>
+                            <td>Use the AI to prototype or test an idea before committing to a project</td>
+                            <td>Assume AI wrote all the code correctly</td>
+                        </tr>
+                        <tr>
+                            <td>Ask the AI any questions you may have</td>
+                            <td>Let AI organize all of the code itself</td>
+                        </tr>
+                        <tr>
+                            <td>Test out any code written by the AI (if you used AI at all, but testing is good to do in general)</td>
+                            <td>Let the AI have complete creative control over your project</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2 id="C3">Instructions</h2>
+                <p>Now that we've gone over the "Do's" and "Don't's" of AI coding assistance, we'll go through the step-by-step process of using AI coding assistance effectively in a project. Follow the steps below to use AI assistance responsibly and effectively. Because of how accessible it is, we recommend using GitHub Copilot as it is built into applications like Visual Studio Code and GitHub. If you are unsure how to access the AI coding assistant in your preferred application, be sure to ask a teacher or search on Google for help. Every app is unique and won't have everything in quite the same place.</p>
+                
+                <h3>Step 1: Start with an idea</h3>
+                <p>From every great project comes a great idea. Brainstorm what you want out of your website, the way it looks, the contents of it, everything that you can think of. This is the part of the project where you can let your imagination run wild. Just be aware that the final product may not turn out exactly as you thought.</p>
+                
+                <div class="image-placeholder">
+                    💡 Brainstorming Illustration - Creative mind map or lightbulb moment
+                </div>
+                
+                <h3>Step 2: Drafting the text</h3>
+                <p>Chances are you're making a website that contains written information in it. Now that you have an idea, start writing out your text on a separate text editing document, like a Microsoft Word document or Google document. Have a teacher or parent look it over to see what might need changes and apply them. Since this website is about the information, make sure you make adjustments to it now. It will be easier to edit and correct the text on the document itself rather than in the code.</p>
+                
+                <div class="image-placeholder">
+                    📝 Document Editing - Professional screenshot of text editing interface
+                </div>
+                
+                <h3>Step 3: Writing the code</h3>
+                <p>Now that you have your text written, it's time to start writing the code for the website. Start with the basics and once you get to the text, you can copy and paste it into the code itself. Make sure you follow good coding practices to make sure your code is readable and understandable to yourself and others. Every good website has code that is well organized and arranged!</p>
+                
+                <div class="image-placeholder">
+                    💻 Code Editor - Clean, professional code editor interface
+                </div>
+                
+                <h3>Step 4: Before you use the AI assistant</h3>
+                <p>You should have quite a large amount of code written at this point in your project. It may be tempting now to use AI to help you with the rest, but there's another skill you can use before using the AI: Google search. Using Google search, there is a wealth of information at your fingertips, including information on HTML coding. If there is something that you would like to add to your website that you don't know how to do, Google it! For example, maybe you want the background of your website about galaxies in space to have a background of stars in space. Google it and try to find sources that will help you write this code on your own! There are plenty of great resources like <a href="https://code.org/en-US" target="_blank">Code.org</a> and <a href="https://www.w3schools.com/" target="_blank">W3Schools.com</a> that can help you achieve your website goals before resorting to using the AI assistant. Try your best to figure it out on your own before you resort to using the AI assistant.</p>
+                
+                <div class="image-placeholder">
+                    🔍 Google Search - Person researching coding solutions online
+                </div>
+                
+                <h3>Step 5: Ask the AI assistant why problems may be happening or why something might not be set up correctly</h3>
+                <p>If you're at this step, you are probably confused on how to get some aspects of your design working, errors in the code may have popped up, or something is appearing on the website not like you expected. This is where the AI assistant can come in. Before having it fix all of the issues that have popped up, ask it to explain why some of the errors occurred. This can give you an idea about how to fix any of the issues without the AI assistant doing it for you.</p>
+                
+                <div class="image-placeholder">
+                    ❓ Problem Solving - Person with question mark, thinking about code issues
+                </div>
+                
+                <h3>Step 6: Use the AI assistant for help with coding</h3>
+                <p>If you made it to this step, you probably don't have many ideas on how to fix the code. Now would be the best time to take advantage of the AI assistant to help you with your code. Click on the AI assistant icon on your code editor (it will look different between the different programs) and give it a prompt. For example, you may want a table of contents on the website that scrolls along with the user. Simply ask the AI to "set up the table of contents as a sidebar on the right of the screen that scrolls with the user." The AI will then go to work to make your idea a reality. Depending on the size of the request, it may take some time before it can complete the task. Once it has finished the prompt, test the code and make sure it is working the way you want it to. As mentioned before, the AI assistant isn't perfect and the code may not be flawless.</p>
+                
+                <div class="image-placeholder">
+                    🎯 AI Prompt Example - Screenshot of AI assistant interface with example prompt
+                </div>
+                
+                <h3>Step 7: Learning from the AI assistant</h3>
+                <p>Now that the AI assistant has helped fix your issue, go back to the code that it wrote. Study it, take notes on it, do everything you can to learn about how it works. Experiment with the code itself to see how things change as you play with it. You can also make any tweaks to the code itself here. If you have trouble understanding the code, ask your teacher how the AI came up with that solution. You can even ask the AI itself how it got the result and it will explain it for you. The best part is that the AI will never get tired of your questions. Ask it whatever you like and ask as many questions as you like! Dive into it to really understand how the AI assistant came up with the solution it did and learn how you can replicate it for future projects. This is a big learning opportunity that you won't want to miss!</p>
+                
+                <div class="image-placeholder">
+                    📚 Learning Process - Student studying code with notes and documentation
+                </div>
+                
+                <h3>Step 8: Test the website</h3>
+                <p>By now, you probably have all of the code for your website finished. As any good web developer would tell you, it's good to test your code often to make sure it is operating the way that you want it to. If something isn't working properly, fix it or ask the AI assistant for help. It's possible you may have even come up with more ideas as you worked on the project. Try adding those in! Any project is a great learning opportunity and will improve your coding skills. Practicing these skills will help develop good lifelong learning skills to become the best developer that you can be.</p>
+                
+                <h2 id="C4">Example Projects</h2>
+                <p>Below are some examples of prompts and projects that were made with the help of the AI assistant:</p>
+                
+                <div class="example-projects">
+                    <ul>
+                        <li>
+                            <strong>Science Project</strong>
+                            <div>Simulating Plant Growth Based on Watering Schedule Using Python</div>
+                            <div class="image-placeholder">📊 Science Project Screenshot - Data visualization of plant growth</div>
+                        </li>
+                        <li>
+                            <strong>Math Project</strong>
+                            <div>Visualizing Patterns in the Fibonacci Sequence with Python</div>
+                            <div class="image-placeholder">🔢 Math Project Screenshot - Fibonacci sequence visualization</div>
+                        </li>
+                        <li>
+                            <strong>Social Studies Project</strong>
+                            <div>Mapping Historical Events with Python and Data Visualization</div>
+                            <div class="image-placeholder">🗺️ Social Studies Project Screenshot - Interactive historical timeline</div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <h2 id="C5">Going Forward</h2>
+                <p>As you continue on your coding journey, be sure to check out these resources to learn more about coding for websites and responsible use of an AI assistant. Below are more resources on where you can learn and grow as a developer. The best part, all of the resources listed are free to use!</p>
+                
+                <div class="resources-list">
+                    <ul>
+                        <li><a href="https://code.org/en-US" target="_blank">Code.org</a> - Interactive coding lessons and courses</li>
+                        <li><a href="https://www.w3schools.com/" target="_blank">W3Schools.com</a> - Comprehensive web development tutorials</li>
+                        <li><a href="https://www.khanacademy.org/" target="_blank">Khan Academy</a> - Free programming courses and exercises</li>
+                        <li><a href="https://scratch.mit.edu/" target="_blank">Scratch</a> - Great for younger learners, but offers accelerated courses for older students</li>
+                        <li><a href="https://www.codecademy.com/" target="_blank">Codecademy</a> - Good for high school students looking to turn coding into a career</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>&copy; 2024 AI Assisted Coding Guide. Created for educational purposes.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Scroll progress indicator
+        window.addEventListener('scroll', function() {
+            const scrollProgress = document.querySelector('.scroll-progress');
+            const scrollTop = window.pageYOffset;
+            const docHeight = document.body.offsetHeight;
+            const winHeight = window.innerHeight;
+            const scrollPercent = scrollTop / (docHeight - winHeight);
+            const scrollPercentRounded = Math.round(scrollPercent * 100);
+            scrollProgress.style.width = scrollPercentRounded + '%';
+        });
+        
+        // Highlight active navigation item in top TOC
+        const sections = document.querySelectorAll('h2[id]');
+        const topNavLinks = document.querySelectorAll('.top-toc a');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            topNavLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = '#667eea';
+                    link.style.color = 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
